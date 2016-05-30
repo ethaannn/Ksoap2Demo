@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ksoap2Demo</string>
+    <string name="error_nothing_sub_menu">没有子菜单</string>
+</resources>
