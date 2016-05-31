@@ -29,8 +29,6 @@ import entity.MonitorBean;
 
 public class MainActivity extends AppCompatActivity
 {
-
-    private Button btnSearch;
     private TextView tvResult;
     private Context context;
     @Override
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         context=this;
         tvResult= (TextView) findViewById(R.id.tv_result);
-
     }
 
     public void onBtnClick(View view)
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity
                         }
                         StringBuffer buffer =new StringBuffer();
                         for (int i = 0; i < monitorBeens.size(); i++) {
-                            buffer.append(monitorBeens.get(i).getAreaName()+"  \n     ");
+                            buffer.append("  \n "+monitorBeens.get(i).getAreaName()+"  \n     ");
                         }
                         tvResult.setText(buffer);
                     }
