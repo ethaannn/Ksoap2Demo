@@ -1,4 +1,4 @@
-package com.hayquan.ksoap.utils;
+package com.hayquan.ksoap2.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

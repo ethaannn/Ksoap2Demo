@@ -17,9 +17,16 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:layout_below="@+id/btn_search"
+        android:layout_below="@+id/btn_clear"
         android:id="@+id/tv_result"
         android:hint="显示结果"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_clear"
+        android:text="clear"
+        android:layout_width="match_parent"
+        android:onClick="onBtnClick"
+        android:layout_below="@+id/btn_search"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

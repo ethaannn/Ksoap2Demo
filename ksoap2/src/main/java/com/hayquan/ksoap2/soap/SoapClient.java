@@ -1,11 +1,11 @@
-package com.hayquan.ksoap.soap;
+package com.hayquan.ksoap2.soap;
 
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.widget.Toast;
 
 
-import com.hayquan.ksoap.utils.NetUtil;
+import com.hayquan.ksoap2.utils.NetUtil;
 
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;

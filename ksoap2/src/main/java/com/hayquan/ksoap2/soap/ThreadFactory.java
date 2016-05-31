@@ -1,4 +1,4 @@
-package com.hayquan.ksoap.soap;
+package com.hayquan.ksoap2.soap;
 
 import android.os.Process;
 

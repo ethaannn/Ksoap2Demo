@@ -2,33 +2,33 @@ package com.hayquan.ksoap.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hayquan.ksoap.R;
 import com.hayquan.ksoap.config.AppConfig;
-import com.hayquan.ksoap.soap.SoapClient;
-import com.hayquan.ksoap.soap.SoapParams;
-import com.hayquan.ksoap.soap.SoapParseUtils;
-import com.hayquan.ksoap.soap.SoapUtil;
+import com.hayquan.ksoap.utils.SoapParseUtils;
+import com.hayquan.ksoap2.soap.SoapClient;
+import com.hayquan.ksoap2.soap.SoapParams;
+import com.hayquan.ksoap2.soap.SoapUtil;
 
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.w3c.dom.Text;
 
 import java.util.LinkedList;
 
-import entity.MonitorBean;
+import com.hayquan.ksoap.entity.MonitorBean;
 
 public class MainActivity extends AppCompatActivity
 {
+    /*
+    * blog: www.hayquan.cn
+    * @author hayquan
+    * email 799689663@qq.com
+    * */
     private TextView tvResult;
     private Context context;
     @Override
@@ -42,7 +42,13 @@ public class MainActivity extends AppCompatActivity
 
     public void onBtnClick(View view)
     {
-    getSupSpinerData();
+        if(view.getId()==R.id.btn_clear){
+            tvResult.setText("");
+        }else
+        {
+            getSupSpinerData();
+        }
+
     }
 
     /**

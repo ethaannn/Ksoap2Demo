@@ -1,4 +1,4 @@
-package com.hayquan.ksoap.soap;
+package com.hayquan.ksoap.utils;
 
 
 import android.util.Log;
@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
-import entity.MonitorBean;
+import com.hayquan.ksoap.entity.MonitorBean;
 
 /**
  * 类描述：

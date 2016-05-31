@@ -1,4 +1,4 @@
-package entity;
+package com.hayquan.ksoap.entity;
 
 import java.io.Serializable;
 
