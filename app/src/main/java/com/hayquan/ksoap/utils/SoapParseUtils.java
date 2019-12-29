@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hayquan.ksoap.entity.MonitorBean;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,16 +13,13 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
-import com.hayquan.ksoap.entity.MonitorBean;
-
 /**
  * 类描述：
  * Created by Harvin on 2016/2/16.
  * Modefy by Harvin on 2016/2/16.
  * 修改备注：
  */
-public class SoapParseUtils
-{
+public class SoapParseUtils {
 
     /**
      * 去字符串头
@@ -40,22 +38,18 @@ public class SoapParseUtils
     }
 
 
-
-    public static LinkedList<MonitorBean> getMonitorBeans(String bodyIn)
-    {
-        LinkedList<MonitorBean> monitorBeens=null;
-        try
-        {
+    public static LinkedList<MonitorBean> getMonitorBeans(String bodyIn) {
+        LinkedList<MonitorBean> monitorBeens = null;
+        try {
             Gson gson = new Gson();
             String jsonBoyIn = removeHeader(bodyIn);
-            JSONObject jsonObject=new JSONObject(jsonBoyIn);
-            JSONArray area=jsonObject.getJSONArray("areas");
-            Log.i("getMonitorBeans",area.toString());
-            Type type = new TypeToken<LinkedList<MonitorBean>>() {}.getType();
+            JSONObject jsonObject = new JSONObject(jsonBoyIn);
+            JSONArray area = jsonObject.getJSONArray("areas");
+            Log.i("getMonitorBeans", area.toString());
+            Type type = new TypeToken<LinkedList<MonitorBean>>() {
+            }.getType();
             monitorBeens = gson.fromJson(area.toString(), type);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return monitorBeens;

@@ -4,7 +4,6 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.widget.Toast;
 
-
 import com.hayquan.ksoap2.utils.NetUtil;
 
 import org.ksoap2.HeaderProperty;
@@ -20,8 +19,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 
 
-public class SoapClient
-{
+public class SoapClient {
 
     /**
      * 上下文.
@@ -58,10 +56,8 @@ public class SoapClient
      *
      * @param context the context
      */
-    public SoapClient(Context context)
-    {
-        mContext = context;
-        mExecutorService = ThreadFactory.getExecutorService();
+    public SoapClient(Context context) {
+        mContext = context; mExecutorService = ThreadFactory.getExecutorService();
     }
 
     /**
@@ -73,30 +69,21 @@ public class SoapClient
      * @param Params            the params
      * @param iSoapUtilCallback the listener
      */
-    public void call(final String url, final String nameSpace, final String methodName, SoapParams Params, final ISoapUtilCallback iSoapUtilCallback)
-    {
+    public void call(final String url, final String nameSpace, final String methodName, SoapParams Params, final ISoapUtilCallback iSoapUtilCallback) {
         this.mParams = Params;
 
-        if (!NetUtil.isNetworkAvailable(mContext))
-        {
+        if (!NetUtil.isNetworkAvailable(mContext)) {
 
-            Toast.makeText(mContext, "网络连接失败", Toast.LENGTH_SHORT).show();
-            iSoapUtilCallback.onFailure(new NetworkErrorException());
-            return;
+            Toast.makeText(mContext, "网络连接失败", Toast.LENGTH_SHORT).show(); iSoapUtilCallback.onFailure(new NetworkErrorException()); return;
         }
 
 
-        mExecutorService.execute(new Runnable()
-        {
+        mExecutorService.execute(new Runnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     doCall(url, nameSpace, methodName, mParams, iSoapUtilCallback);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -104,42 +91,27 @@ public class SoapClient
     }
 
     private Thread thread;
-    public void callSynchro(final String url, final String nameSpace, final String methodName, SoapParams Params, final ISoapUtilCallback iSoapUtilCallback)
-    {
+
+    public void callSynchro(final String url, final String nameSpace, final String methodName, SoapParams Params, final ISoapUtilCallback iSoapUtilCallback) {
         this.mParams = Params;
 
-        if (!NetUtil.isNetworkAvailable(mContext))
-        {
-            Toast.makeText(mContext, "网络连接失败", Toast.LENGTH_SHORT).show();
-            iSoapUtilCallback.onFailure(new NetworkErrorException());
-            return;
-        }
-        thread =new Thread(new Runnable() {
+        if (!NetUtil.isNetworkAvailable(mContext)) {
+            Toast.makeText(mContext, "网络连接失败", Toast.LENGTH_SHORT).show(); iSoapUtilCallback.onFailure(new NetworkErrorException()); return;
+        } thread = new Thread(new Runnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     doCall(url, nameSpace, methodName, mParams, iSoapUtilCallback);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-        thread.start();
-        try
-        {
+        }); thread.start(); try {
             thread.join();
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
-
-
-
 
 
     /**
@@ -151,44 +123,31 @@ public class SoapClient
      * @param params            the params
      * @param iSoapUtilCallback the listener
      */
-    public void doCall(String url, String nameSpace, String methodName, SoapParams params, ISoapUtilCallback iSoapUtilCallback)
-    {
-        try
-        {
+    public void doCall(String url, String nameSpace, String methodName, SoapParams params, ISoapUtilCallback iSoapUtilCallback) {
+        try {
 
             // 指定WebService的命名空间和调用的方法名
             SoapObject request = new SoapObject(nameSpace, methodName);
             // 传递参数
-          LinkedHashMap<String,Object> paramsList = params.getParamsList();
-            Iterator<Map.Entry<String,Object>> iter=paramsList.entrySet().iterator();
-                while (iter.hasNext())
-                {
-                    Map.Entry<String, Object> entry =  iter .next();
-                    request.addProperty(entry.getKey(), entry.getValue());
-                }
+            LinkedHashMap<String, Object> paramsList = params.getParamsList(); Iterator<Map.Entry<String, Object>> iter = paramsList.entrySet().iterator(); while (iter.hasNext()) {
+                Map.Entry<String, Object> entry = iter.next(); request.addProperty(entry.getKey(), entry.getValue());
+            }
 
             // 生成调用WebService方法的SOAP请求信息，并指定SOAP的版本
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.bodyOut = request;
-            envelope.dotNet = mDotNet;
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11); envelope.bodyOut = request; envelope.dotNet = mDotNet;
             // 等价于envelope.bodyOut=rpc;
-            envelope.setOutputSoapObject(request);
-            HttpTransportSE httpTransportSE = new HttpTransportSE(url, mTimeout);
-            httpTransportSE.debug = true;
-            ArrayList<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
+            envelope.setOutputSoapObject(request); HttpTransportSE httpTransportSE = new HttpTransportSE(url, mTimeout); httpTransportSE.debug = true; ArrayList<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
             headerPropertyArrayList.add(new HeaderProperty("Connection", "close"));
 
-             httpTransportSE.call(" ", envelope);
-//            httpTransportSE.call(null, envelope, headerPropertyArrayList);
-//            System.setProperty("http.keepAlive", "false");
+            httpTransportSE.call(" ", envelope);
+            //            httpTransportSE.call(null, envelope, headerPropertyArrayList);
+            //            System.setProperty("http.keepAlive", "false");
             // SoapObject bodyIn = (SoapObject) envelope.bodyIn;
             // result = bodyIn.getProperty(0).toString();
             //            LogUtil.i("SoapClient", envelope.getResponse().toString());
             iSoapUtilCallback.onSuccess(envelope);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             iSoapUtilCallback.onFailure(e);
 
         }
@@ -199,8 +158,7 @@ public class SoapClient
      *
      * @param timeout 毫秒
      */
-    public void setTimeout(int timeout)
-    {
+    public void setTimeout(int timeout) {
         this.mTimeout = timeout;
     }
 
@@ -209,8 +167,7 @@ public class SoapClient
      *
      * @return true, if is dot net
      */
-    public boolean isDotNet()
-    {
+    public boolean isDotNet() {
         return mDotNet;
     }
 
@@ -219,13 +176,11 @@ public class SoapClient
      *
      * @param dotNet the new dot net
      */
-    public void setDotNet(boolean dotNet)
-    {
+    public void setDotNet(boolean dotNet) {
         this.mDotNet = dotNet;
     }
 
-    public interface ISoapUtilCallback
-    {
+    public interface ISoapUtilCallback {
         void onSuccess(SoapSerializationEnvelope envelope) throws Exception;
 
         void onFailure(Exception e);
